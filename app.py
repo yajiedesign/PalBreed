@@ -23,12 +23,14 @@ def main():
             options=pal_options,
         )
 
-        max_depth = st.slider(
-            label="最大深度",
-            min_value=1,
-            max_value=3,
-            value=2,
-        )
+        # max_depth = st.slider(
+        #    label="最大深度",
+        #    min_value=1,
+        #    max_value=3,
+        #    value=1,
+        # )
+        max_depth = 1
+
     from pyecharts.charts import Graph
     from pyecharts import options as opts
 
@@ -47,7 +49,7 @@ def main():
 
     )
 
-    st_pyecharts(c, height="800px")
+    st_pyecharts(c, height="2800px")
 
 
 if __name__ == "__main__":
