@@ -51,7 +51,7 @@ class Breed:
                 if key in self.combine:
                     continue
                 if parent_a == parent_b:
-                    self.combine[key] = parent_a
+                    continue
 
                 fecundity = self.id_2_fecundity[parent_a] + self.id_2_fecundity[parent_b]
                 fecundity = round(fecundity / 2)

@@ -1,16 +1,19 @@
-import inspect
-import textwrap
-
 import streamlit as st
 from pyecharts.charts import Tree
 from streamlit_echarts import st_pyecharts
 
 from breed import Breed
+from find import dfs
 from ui import PalOption
 
 
+@st.cache_data
+def get_breed():
+    return Breed()
+
+
 def main():
-    breed = Breed()
+    breed = get_breed()
 
     with st.sidebar:
         st.header("设置")
@@ -19,36 +22,28 @@ def main():
             label="选择目标帕鲁",
             options=pal_options,
         )
+
+        max_depth = st.slider(
+            label="最大深度",
+            min_value=1,
+            max_value=3,
+            value=2,
+        )
     from pyecharts.charts import Graph
     from pyecharts import options as opts
-    max_depth = 3
+
     data = []
-    tree_root = {}
 
-    def dfs(tree_root, pal_id, depth):
-        if depth > max_depth:
-            return
-        tree_root["name"] = breed.id_2_name[pal_id]
-        tree_root["children"] = []
-        if pal_id in breed.combine_with_child:
-            for parent_a, parent_b in breed.combine_with_child[pal_id]:
-                child_a = {}
-                dfs(child_a, parent_a, depth + 1)
-                tree_root["children"].append(child_a)
-                child_b = {}
-                dfs(child_b, parent_b, depth + 1)
-                tree_root["children"].append(child_b)
+    root_pal_id = selected_api.pal_id
 
-    dfs(tree_root, selected_api.pal_id, 0)
+    tree_root = dfs(root_pal_id, 0, breed, max_depth, root_pal_id)
     data.append(tree_root)
-
 
     c = (
         Tree()
-        .add("", data, orient="BT", edge_shape="polyline")
-        .set_global_opts(title_opts=opts.TitleOpts(title="Tree-基本示例"),
-                         datazoom_opts=opts.DataZoomOpts(range_start=0, range_end=100))
-        .set_series_opts(label_opts=opts.LabelOpts(position="left", vertical_align="middle", ))
+        .add("", data, orient="LR", edge_shape="polyline")
+        .set_global_opts(title_opts=opts.TitleOpts(title=""))
+        .set_series_opts(label_opts=opts.LabelOpts(position="top", vertical_align="middle", ))
 
     )
 
