@@ -69,8 +69,7 @@ class FindWithCache:
         for child in node["children"]:
             parent_a = child["parent_a"]
             parent_b = child["parent_b"]
-            del child["parent_a"]
-            del child["parent_b"]
+
             if self.known_parent is not None:
                 if parent_a != self.known_parent and parent_b != self.known_parent:
                     continue

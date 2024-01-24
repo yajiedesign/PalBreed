@@ -68,7 +68,7 @@ def main():
 
         )
 
-        st_pyecharts(c, height="2800px")
+        st_pyecharts(c, height="100%")
 
 
 if __name__ == "__main__":
