@@ -2,8 +2,8 @@ import streamlit as st
 from pyecharts.charts import Tree
 from streamlit_echarts import st_pyecharts
 
-from breed import Breed
-from find import   FindWithCache
+from breed import Breed, CombineKey
+from find import FindWithCache
 from ui import PalOption
 
 from pyecharts.charts import Graph
@@ -20,8 +20,8 @@ def main():
 
     with st.sidebar:
         st.header("设置")
-        mode_labels = ["目标帕鲁", ]
-        mode_keys = ["TargetPal", ]
+        mode_labels = ["目标帕鲁", "已知父母"]
+        mode_keys = ["TargetPal", "KnownParents"]
 
         mode = st.radio(
             "选择模式",
@@ -42,13 +42,24 @@ def main():
                 index=None
             )
 
-            #max_depth = st.slider(
+            # max_depth = st.slider(
             #    label="最大深度",
             #    min_value=1,
             #    max_value=3,
             #    value=1,
-            #)
+            # )
             max_depth = 1
+
+        elif mode == "KnownParents":
+            pal_options = [PalOption(pal_id, name) for (pal_id, name) in breed.id_with_name]
+            known_pal_a = st.selectbox(
+                label="已知父母 a",
+                options=pal_options,
+            )
+            known_pal_b = st.selectbox(
+                label="已知父母 b",
+                options=pal_options,
+            )
 
     if mode == "TargetPal":
         data = []
@@ -69,6 +80,17 @@ def main():
         )
 
         st_pyecharts(c, height="3000px")
+    elif mode == "KnownParents":
+
+        parent_a = known_pal_a.pal_id
+        parent_b = known_pal_b.pal_id
+
+        if parent_a == parent_b:
+            child = parent_a
+        else:
+            child = breed.combine[CombineKey(parent_a, parent_b)]
+
+        st.write(f"{child:03d} {breed.id_2_name[child]}")
 
 
 if __name__ == "__main__":

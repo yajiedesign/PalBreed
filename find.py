@@ -1,10 +1,6 @@
 import copy
 
 
-
-
-
-
 class FindWithCache:
     def __init__(self,
                  breed,
