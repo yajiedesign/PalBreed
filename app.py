@@ -1,5 +1,6 @@
 import streamlit as st
 from pyecharts.charts import Tree
+from streamlit.components.v1 import components
 from streamlit_echarts import st_pyecharts
 
 from breed import Breed, CombineKey
@@ -92,6 +93,20 @@ def main():
 
         st.write(f"{child:03d} {breed.id_2_name[child]}")
 
+    st.components.v1.html(
+        """
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9c55a9e81830f138ba5b9af774c71fe4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        """,
+        height=0,
+    )
 
 if __name__ == "__main__":
     main()
