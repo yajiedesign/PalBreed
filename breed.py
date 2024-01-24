@@ -1,6 +1,4 @@
 import pandas as pd
-import numpy as np
-from find import Find
 
 
 class CombineKey:
@@ -39,11 +37,12 @@ class Breed:
         self.fixed = dict(zip(zip(fixed[0], fixed[1]), fixed[2]))
         self.combine = {}
         self.combine_with_child = {}
-        self.create_bread()
         self.cache = None
+
+        self.create_combine()
         self.create_cache()
 
-    def create_bread(self):
+    def create_combine(self):
         for key in self.fixed:
             parent_a, parent_b = key
             child = self.fixed[key]
@@ -74,12 +73,26 @@ class Breed:
                 self.combine_with_child[child] = []
             self.combine_with_child[child].append((parent_a, parent_b))
 
+    def scan(self, pal_id):
+        node = {"name": f"{pal_id:03d} {self.id_2_name[pal_id]}", "children": []}
+
+        if pal_id in self.combine_with_child:
+            for parent_a, parent_b in self.combine_with_child[pal_id]:
+                parent_node = {}
+                name_a = f"{parent_a:03d} {self.id_2_name[parent_a]}"
+                name_b = f"{parent_b:03d} {self.id_2_name[parent_b]}"
+                parent_node["name"] = name_a + " + " + name_b
+                parent_node["parent_a"] = parent_a
+                parent_node["parent_b"] = parent_b
+                node["children"].append(parent_node)
+                parent_node["children"] = []
+
+        return node
+
     def create_cache(self):
         cache = {}
         for i in self.id:
-            print(i)
-            find = Find(self, 0, None, i)
-            root_node = find.scan(i, 0)
+            root_node = self.scan(i)
             cache[i] = root_node
         self.cache = cache
 

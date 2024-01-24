@@ -3,7 +3,7 @@ from pyecharts.charts import Tree
 from streamlit_echarts import st_pyecharts
 
 from breed import Breed
-from find import Find, FindWithCache
+from find import   FindWithCache
 from ui import PalOption
 
 from pyecharts.charts import Graph
@@ -68,7 +68,7 @@ def main():
 
         )
 
-        st_pyecharts(c, height="100%")
+        st_pyecharts(c, height="3000px")
 
 
 if __name__ == "__main__":
