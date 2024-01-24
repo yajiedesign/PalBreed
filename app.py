@@ -3,7 +3,7 @@ from pyecharts.charts import Tree
 from streamlit_echarts import st_pyecharts
 
 from breed import Breed
-from find import   Find
+from find import Find, FindWithCache
 from ui import PalOption
 
 from pyecharts.charts import Graph
@@ -36,25 +36,26 @@ def main():
                 options=pal_options,
             )
 
-            known_pal= st.selectbox(
+            known_pal = st.selectbox(
                 label="已知父母(可选)",
                 options=pal_options,
                 index=None
             )
 
-            # max_depth = st.slider(
-        #    label="最大深度",
-        #    min_value=1,
-        #    max_value=3,
-        #    value=1,
-        # )
-        max_depth = 1
+            #max_depth = st.slider(
+            #    label="最大深度",
+            #    min_value=1,
+            #    max_value=3,
+            #    value=1,
+            #)
+            max_depth = 1
+
     if mode == "TargetPal":
         data = []
 
         root_pal_id = target_pal.pal_id
         known_pal_id = known_pal.pal_id if known_pal is not None else None
-        find = Find(breed, max_depth, known_pal_id, root_pal_id)
+        find = FindWithCache(breed, max_depth, known_pal_id, root_pal_id)
 
         tree_root = find.scan(root_pal_id, 0)
         data.append(tree_root)
@@ -68,7 +69,6 @@ def main():
         )
 
         st_pyecharts(c, height="2800px")
-
 
 
 if __name__ == "__main__":

@@ -1,5 +1,7 @@
 import pandas as pd
 
+from find import Find
+
 
 class CombineKey:
     def __init__(self, parent_a, parent_b):
@@ -38,6 +40,8 @@ class Breed:
         self.combine = {}
         self.combine_with_child = {}
         self.create_bread()
+        self.cache = None
+        self.create_cache()
 
     def create_bread(self):
         for key in self.fixed:
@@ -61,7 +65,7 @@ class Breed:
                     if abs(fecundity - f) < abs(fecundity - child):
                         child = f
 
-                self.combine[CombineKey(parent_a, parent_b)] =  self.fecundity_2_id[child]
+                self.combine[CombineKey(parent_a, parent_b)] = self.fecundity_2_id[child]
 
         for key in self.combine:
             parent_a, parent_b = key.parent_a, key.parent_b
@@ -69,6 +73,15 @@ class Breed:
             if child not in self.combine_with_child:
                 self.combine_with_child[child] = []
             self.combine_with_child[child].append((parent_a, parent_b))
+
+    def create_cache(self):
+        cache = {}
+        for i in self.id:
+            print(i)
+            find = Find(self, 0, None, i)
+            root_node = find.scan(i, 0)
+            cache[i] = root_node
+        self.cache = cache
 
 
 if __name__ == '__main__':
