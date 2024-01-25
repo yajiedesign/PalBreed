@@ -32,7 +32,6 @@ class Breed:
 
         name = pd.read_csv(f'data/name_{language}.csv', header=0)
 
-
         self.key_2_no = dict(zip(name['Key'], name['No']))
         self.key_2_name = dict(zip(name['Key'], name['Name']))
 
@@ -43,7 +42,6 @@ class Breed:
         only_same = pd.read_csv('data/only_same.csv', header=0)
 
         self.only_same = set(only_same['Key'])
-
 
         self.combine = {}
         self.combine_from_child = {}
@@ -58,7 +56,7 @@ class Breed:
             child = self.fixed[key]
             self.combine[CombineKey(parent_a, parent_b)] = child
         # self.fecundity
-        fecundity_r = list(reversed(self.power_list))
+
         for parent_a in self.key:
             for parent_b in self.key:
                 key = CombineKey(parent_a, parent_b)
@@ -67,17 +65,21 @@ class Breed:
                 if parent_a == parent_b:
                     continue
 
-                child_fecundity = self.key_2_power[parent_a] + self.key_2_power[parent_b] + 1
-                child_fecundity = math.floor(child_fecundity / 2)
+                child_target_power = self.key_2_power[parent_a] + self.key_2_power[parent_b] + 1
+                child_target_power = math.floor(child_target_power / 2)
                 # find the closest fecundity
-                child = fecundity_r[0]
-                for f in fecundity_r:
-                    if abs(child_fecundity - f) < abs(child_fecundity - child):
-                        child = f
-                child_key = self.power_2_key[child]
-                if child_key in self.only_same:
+                min_diff_key = self.key[0]
+                mim_diff = abs(child_target_power - self.key_2_power[min_diff_key])
+                for k in self.key:
+                    p = self.key_2_power[k]
+                    diff = abs(child_target_power - p)
+                    if diff < mim_diff:
+                        min_diff_key = k
+                        mim_diff = diff
+
+                if min_diff_key in self.only_same:
                     continue
-                self.combine[CombineKey(parent_a, parent_b)] = self.power_2_key[child]
+                self.combine[CombineKey(parent_a, parent_b)] = min_diff_key
 
         for key in self.combine:
             parent_a, parent_b = key.parent_a, key.parent_b
