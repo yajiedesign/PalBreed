@@ -91,7 +91,7 @@ def main():
         else:
             child = breed.combine[CombineKey(parent_a, parent_b)]
 
-        st.write(f"{breed.key_2_name[child]:03d} {breed.key_2_name[child]}")
+        st.write(f"{breed.key_2_no[child]:03d} {breed.key_2_name[child]}")
 
     st.components.v1.html(
         """
