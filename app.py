@@ -31,7 +31,7 @@ def main():
         )
         mode = mode_keys[mode]
         if mode == "TargetPal":
-            pal_options = [PalOption(pal_id, name) for (pal_id, name) in breed.id_with_name]
+            pal_options = [PalOption(key,breed.key_2_no[key], breed.key_2_name[key]) for key in breed.key]
             target_pal = st.selectbox(
                 label="选择目标帕鲁",
                 options=pal_options,
@@ -49,10 +49,10 @@ def main():
             #    max_value=3,
             #    value=1,
             # )
-            max_depth = 1
+            max_depth = 0
 
         elif mode == "KnownParents":
-            pal_options = [PalOption(pal_id, name) for (pal_id, name) in breed.id_with_name]
+            pal_options = [PalOption(key, breed.key_2_no[key], breed.key_2_name[key]) for key in breed.key]
             known_pal_a = st.selectbox(
                 label="已知父母 a",
                 options=pal_options,
@@ -65,11 +65,11 @@ def main():
     if mode == "TargetPal":
         data = []
 
-        root_pal_id = target_pal.pal_id
-        known_pal_id = known_pal.pal_id if known_pal is not None else None
-        find = FindWithCache(breed, max_depth, known_pal_id, root_pal_id)
+        root_key = target_pal.key
+        known_key = known_pal.key if known_pal is not None else None
+        find = FindWithCache(breed, max_depth, known_key, root_key)
 
-        tree_root = find.scan(root_pal_id, 0)
+        tree_root = find.scan(root_key, 0)
         data.append(tree_root)
 
         c = (
@@ -83,8 +83,8 @@ def main():
         st_pyecharts(c, height="3000px")
     elif mode == "KnownParents":
 
-        parent_a = known_pal_a.pal_id
-        parent_b = known_pal_b.pal_id
+        parent_a = known_pal_a.key
+        parent_b = known_pal_b.key
 
         if parent_a == parent_b:
             child = parent_a

@@ -1,28 +1,29 @@
-85,7,85
-40,66,40
-24,10,24
-71,57,71
-37,32,37
-80,65,80
-58,75,58
-90,91,90
-33,103,33
-64,60,64
-12,10,12
-110,97,110
-89,59,89
-104,99,104
-45,70,45
-84,94,84
-48,22,48
-86,6,86
-65,43,65
-31,9,31
-102,101,102
-88,57,88
-32,53,32
-33,87,104
-71,100,105
-33,60,103
-103,85,106
-61,98,107
+ParentAKey,ParentBKey,ChildKey
+Relaxaurus,Sparkit,Relaxaurus Lux
+Incineram,Maraith,Incineram Noct
+Mau,Pengullet,Mau Cryst
+Vanwyrm,Foxcicle,Vanwyrm Cryst
+Eikthyrdeer,Hangyu,Eikthyrdeer Terra
+Elphidran,Surfent,Elphidran Aqua
+Pyrin,Katress,Pyrin Noct
+Mammorest,Wumpo,Mammorest Cryst
+Mossanda,Grizzbolt,Mossanda Lux
+Dinossom,Rayhound,Dinossom Lux
+Jolthog,Pengullet,Jolthog Cryst
+Frostallion,Helzephyr,Frostallion Noct
+Kingpaca,Reindrix,Ice Kingpaca
+Lyleen,Menasting,Lyleen Noct
+Leezpunk,Flambelle,Leezpunk Ignis
+Blazehowl,Felbat,Blazehowl Noct
+Robinquill,Fuddler,Robinquill Terra
+Broncherry,Fuack,Broncherry Aqua
+Surfent,Dumud,Surfent Terra
+Gobfin,Rooby,Gobfin Ignis
+Suzaku,Jormuntide,Suzaku Aqua
+Reptyro,Foxcicle,Ice Reptyro
+Hangyu,Swee,Hangyu Cryst
+Mossanda,Petallia,Lyleen
+Vanwyrm,Anubis,Faleris
+Mossanda,Rayhound,Grizzbolt
+Grizzbolt,Relaxaurus,Orserk
+Kitsun,Astegon,Shadowbeak
