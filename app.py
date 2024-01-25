@@ -31,7 +31,7 @@ def main():
         )
         mode = mode_keys[mode]
         if mode == "TargetPal":
-            pal_options = [PalOption(key,breed.key_2_no[key], breed.key_2_name[key]) for key in breed.key]
+            pal_options = [PalOption(key, breed.key_2_no[key], breed.key_2_name[key]) for key in breed.key]
             target_pal = st.selectbox(
                 label="选择目标帕鲁",
                 options=pal_options,
@@ -72,15 +72,17 @@ def main():
         tree_root = find.scan(root_key, 0)
         data.append(tree_root)
 
+        child_count = len(tree_root["children"]) * 40
+
         c = (
             Tree()
-            .add("", data, orient="LR", edge_shape="polyline")
+            .add("", data, orient="LR", edge_shape="polyline", pos_top="20px")
             .set_global_opts(title_opts=opts.TitleOpts(title=""))
             .set_series_opts(label_opts=opts.LabelOpts(position="top", vertical_align="middle", ))
 
         )
 
-        st_pyecharts(c, height="3000px")
+        st_pyecharts(c, height=f"{child_count}px")
     elif mode == "KnownParents":
 
         parent_a = known_pal_a.key
@@ -107,6 +109,7 @@ var _hmt = _hmt || [];
         """,
         height=0,
     )
+
 
 if __name__ == "__main__":
     main()
