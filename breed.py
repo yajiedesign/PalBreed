@@ -1,3 +1,5 @@
+import math
+
 import pandas as pd
 
 
@@ -47,7 +49,8 @@ class Breed:
             parent_a, parent_b = key
             child = self.fixed[key]
             self.combine[CombineKey(parent_a, parent_b)] = child
-
+        #self.fecundity
+        fecundity_r =  list(reversed(self.fecundity))
         for parent_a in self.id:
             for parent_b in self.id:
                 key = CombineKey(parent_a, parent_b)
@@ -56,12 +59,12 @@ class Breed:
                 if parent_a == parent_b:
                     continue
 
-                fecundity = self.id_2_fecundity[parent_a] + self.id_2_fecundity[parent_b]
-                fecundity = round(fecundity / 2)
+                child_fecundity = self.id_2_fecundity[parent_a] + self.id_2_fecundity[parent_b] + 1
+                child_fecundity = math.floor(child_fecundity / 2)
                 # find the closest fecundity
-                child = self.fecundity[0]
-                for f in self.fecundity:
-                    if abs(fecundity - f) < abs(fecundity - child):
+                child = fecundity_r[0]
+                for f in fecundity_r:
+                    if abs(child_fecundity - f) < abs(child_fecundity - child):
                         child = f
 
                 self.combine[CombineKey(parent_a, parent_b)] = self.fecundity_2_id[child]
